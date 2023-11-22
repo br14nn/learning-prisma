@@ -11,13 +11,17 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  username String @unique
-  name     String
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  email   String   @unique
+  profile Profile?
 }
 
-model Customer {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  totalOrder Int
+model Profile {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String
+  gender String
+  age    String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique @db.ObjectId
 }
